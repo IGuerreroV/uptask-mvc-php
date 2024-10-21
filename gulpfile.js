@@ -1,9 +1,12 @@
-import gulpSass from 'gulp-sass'; // Permite compilar archivos Sass a CSS utilizando Gulp.
-import { src, dest, watch, series } from 'gulp'; // Proporciona funcionalidades de automatización de tareas en Gulp.
-import terser from 'gulp-terser'; // Minifica archivos JavaScript para reducir su tamaño y mejorar el rendimiento.
-import * as sass from 'sass'; // Paquete de Sass utilizado para compilar Sass a CSS.
+import * as dartSass from 'sass'; // Paquete de Sass utilizado para compilar Sass a CSS.
 
-const gulpSassInstance = gulpSass(sass);
+import { dest, series, src, watch } from 'gulp'; // Proporciona funcionalidades de automatización de tareas en Gulp.
+
+import gulpPlumber from 'gulp-plumber';
+import gulpSass from 'gulp-sass'; // Permite compilar archivos Sass a CSS utilizando Gulp.
+import terser from 'gulp-terser'; // Minifica archivos JavaScript para reducir su tamaño y mejorar el rendimiento.
+
+const sass = gulpSass(dartSass);
 
 const paths = {
   scss: 'src/scss/**/*.scss',
@@ -12,7 +15,8 @@ const paths = {
 
 export function css(done) {
   src(paths.scss, { sourcemaps: true })
-    .pipe(gulpSassInstance({ outputStyle: 'compressed', silenceDeprecations: ['legacy-js-api'] }).on('error', gulpSassInstance.logError))
+    .pipe(gulpPlumber())
+    .pipe(sass({ outputStyle: 'compressed', silenceDeprecations: ['legacy-js-api'] }).on('error', sass.logError))
     .pipe(dest('./public/dist/css', { sourcemaps: '.' }));
   done();
 }
