@@ -7,12 +7,12 @@
     <form class="formulario" method="POST" action="/crear">
       <div class="campo">
         <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" placeholder="Tu Nombre" name="nombre" />
+        <input type="text" id="nombre" placeholder="Tu Nombre" name="nombre" value="<?php echo $usuario->nombre; ?>"/>
       </div>
 
       <div class="campo">
         <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Tu Email" name="email" />
+        <input type="email" id="email" placeholder="Tu Email" name="email" value="<?php echo $usuario->email; ?>"/>
       </div>
 
       <div class="campo">
@@ -25,7 +25,7 @@
         <input type="password" id="password2" placeholder="Repite tu Password" name="password2" />
       </div>
 
-      <input type="submit" class="boton" value="Iniciar Sesión" />
+      <input type="submit" class="boton" value="Crear Cuenta" />
     </form>
 
     <div class="acciones">
