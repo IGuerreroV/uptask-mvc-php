@@ -35,7 +35,17 @@ class LoginController
       $alertas = $usuario->validarNuevaCuenta();
       // debuguear($alertas);
 
-      
+      if (empty($alertas)) {
+        $existeUsuario = Usuario::where('email', $usuario->email);
+        if ($existeUsuario) {
+          Usuario::setAlerta('error', 'El usuario ya esta registrado');
+          $alertas = Usuario::getAlertas();
+        } else {
+          // Crear el usuario
+        }
+        // debuguear($existeUsuario);
+      }
+
     }
 
     // Render a la vista
