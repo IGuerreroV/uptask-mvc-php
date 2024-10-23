@@ -34,6 +34,8 @@ class LoginController
       // debuguear($usuario);
       $alertas = $usuario->validarNuevaCuenta();
       // debuguear($alertas);
+
+      
     }
 
     // Render a la vista
