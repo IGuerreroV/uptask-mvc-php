@@ -129,7 +129,7 @@ class LoginController
     // debuguear($token);
 
     if(!$token) {
-      header('Location: /'); 
+      header('Location: /');
     }
 
     // Identificar el usuario con este token
@@ -141,7 +141,18 @@ class LoginController
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      // Leer el nuevo password y guardarlo
+      $usuario->sincronizar($_POST);
 
+      // Validar el password
+      $alertas = $usuario->validarPassword();
+      // debuguear($usuario);
+      
+      if(empty($alertas)) {
+        // Hashear el nuevo password
+
+        debuguear($usuario);
+      }
     }
 
     $alertas = Usuario::getAlertas();
