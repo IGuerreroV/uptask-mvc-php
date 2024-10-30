@@ -32,9 +32,20 @@ class DashboardController
       $alertas = $proyecto->validarProyecto();
 
       if(empty($alertas)) {
-        // Guardar el proyecto
+        // Generar una URL único
+        $hash = bin2hex(random_bytes(16));
+        $proyecto->url = $hash;
 
-        debuguear($proyecto);
+        // Almacenar el creador del proyecto
+        $proyecto->propietario_id = $_SESSION['id']; // Almacena el ID del usuario
+
+        // Guardar el proyecto
+        $proyecto->guardar();
+
+        // Redireccionar
+        header('Location: /proyecto?url=' . $proyecto->url);
+
+        // debuguear($proyecto);
       }
 
       // debuguear($proyecto);
