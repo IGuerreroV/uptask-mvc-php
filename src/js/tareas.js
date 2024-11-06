@@ -45,7 +45,7 @@
       // console.log(event.target);
     })
     
-    document.querySelector('body').appendChild(modal);
+    document.querySelector('.dashboard').appendChild(modal);
     // console.log(modal);
   }
 
@@ -54,11 +54,39 @@
 
     if(tarea === '' ) {
       // Mostrar alerta de error
-      
+      mostrarAlerta('El nombre de la tarea es Obligatorio', 'error', document.querySelector('.formulario legend'));
       return
     }
+    agregarTarea(tarea);
+  }
+  
+  // Muestra un mensaje de error si no se cumple la validacion
+  function mostrarAlerta(mensaje, tipo, referencia) {
+    // Previen que se muestren mas de una alerta
+    const alertaPrevia = document.querySelector('.alertas');
+    if(alertaPrevia) {
+      alertaPrevia.remove();
+    }
+    
+    const alertas = document.createElement('DIV')
+    alertas.classList.add('alertas', tipo);
+    alertas.textContent = mensaje;
 
-    console.log('Despues del if');
+    // Inserta la alertas antes del legend
+    referencia.parentElement.insertBefore(alertas, referencia.nextElementSibling);
+
+    // console.log(referencia);
+    // console.log(referencia.parentElement);
+
+    // Eliminar la alerta despues de 5 segundos
+    setTimeout(() => {
+      alertas.remove();
+    }, 5000)
+  }
+
+  // Consultar el servidor para agregar la nueva tarea al proyecto actual
+  function agregarTarea(tarea) {
+    
   }
 })();
 
