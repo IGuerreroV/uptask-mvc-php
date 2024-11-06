@@ -28,6 +28,20 @@
       const formulario = document.querySelector('.formulario')
       formulario.classList.add('animar');
     }, 0)
+    
+    // Delegate para cerrar el Modal
+    modal.addEventListener('click', function(event) {
+      event.preventDefault();
+      if(event.target.classList.contains('cerrar-modal')) {
+        const formulario = document.querySelector('.formulario')
+        formulario.classList.add('cerrar');
+        setTimeout(() => {
+          modal.remove();
+        }, 500)
+      } 
+      // console.log(event.target);
+    })
+    
     document.querySelector('body').appendChild(modal);
     // console.log(modal);
   }
