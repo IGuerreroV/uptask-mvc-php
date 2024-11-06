@@ -39,11 +39,26 @@
           modal.remove();
         }, 500)
       } 
+      if(event.target.classList.contains('submit-nueva-tarea')) {
+        submitFormularioNuevaTarea();
+      }
       // console.log(event.target);
     })
     
     document.querySelector('body').appendChild(modal);
     // console.log(modal);
+  }
+
+  function submitFormularioNuevaTarea() {
+    const tarea = document.querySelector('#tarea').value.trim();
+
+    if(tarea === '' ) {
+      // Mostrar alerta de error
+      
+      return
+    }
+
+    console.log('Despues del if');
   }
 })();
 
