@@ -14,7 +14,12 @@ class TareaController
   public static function crear()
   {
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
-      echo json_encode($_POST);
+
+      $respuesta = [ // Arrelgo asociativo
+        'proyecto_id' => $_POST['proyecto_id']
+      ];
+
+      echo json_encode($respuesta);
     }
   }
 
