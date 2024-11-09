@@ -9,12 +9,26 @@ class TareaController
 {
   public static function index()
   {
+    $proyecto_id = $_GET['url'];
 
+    if (!$proyecto_id) {
+      header('Location: /dashboard');
+    }
+
+    $proyecto_id = Proyecto::where('url', $proyecto_id);
+    session_start();
+    if (!$proyecto_id || $proyecto_id->propietario_id !== $_SESSION['id']) {
+      header('Location: /404');
+    }
+
+    $tareas = Tarea::belongsTo('proyecto_id', $proyecto_id->id);
+    echo json_encode(['tareas' => $tareas]);
+    // debuguear($_GET);
   }
 
   public static function crear()
   {
-    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       session_start();
       $proyecto_id = $_POST['proyecto_id'];
@@ -25,7 +39,7 @@ class TareaController
           'tipo' => 'error',
           'mensaje' => 'Hubo un Error al Crear la Tarea'
         ];
-        echo json_encode( $respuesta );
+        echo json_encode($respuesta);
         return;
       }
 
@@ -44,15 +58,15 @@ class TareaController
 
   public static function actualizar()
   {
-    if($_SERVER['REQUEST_METHOD'] === 'POST') {
-      
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     }
   }
 
   public static function eliminar()
   {
-    if($_SERVER['REQUEST_METHOD'] === 'POST') {
-      
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     }
   }
 }
