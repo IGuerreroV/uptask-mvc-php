@@ -2,8 +2,8 @@
 
 namespace Controllers;
 
-use Model\ActiveRecord;
 use Model\Proyecto;
+use Model\Tarea;
 
 class TareaController
 {
@@ -26,14 +26,19 @@ class TareaController
           'mensaje' => 'Hubo un Error al Crear la Tarea'
         ];
         echo json_encode( $respuesta );
-      } else {
-        $respuesta = [
-          'tipo' => 'exito',
-          'mensaje' => 'Tarea Creada Correctamente'
-        ];
-        echo json_encode( $respuesta );
+        return;
       }
-      // echo json_encode($proyecto);
+
+      // Todo bien, instanciar y crear la tarea
+      $tarea = new Tarea($_POST);
+      $tarea->proyecto_id = $proyecto->id;
+      $resultado = $tarea->guardar();
+      $respuesta = [
+        'tipo' => 'exito',
+        'id' => $resultado['id'],
+        'mensaje' => 'Tarea creada correctamente'
+      ];
+      echo json_encode(value: $respuesta);
     }
   }
 
