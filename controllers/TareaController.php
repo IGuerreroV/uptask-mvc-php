@@ -14,7 +14,7 @@ class TareaController
     if (!$proyecto_id) {
       header('Location: /dashboard');
     }
-
+    
     $proyecto_id = Proyecto::where('url', $proyecto_id);
     session_start();
     if (!$proyecto_id || $proyecto_id->propietario_id !== $_SESSION['id']) {

@@ -1,7 +1,30 @@
 (function() { // Funcion IIFE (Immediately Invoked Function Expression)
+  // Obtener Tareas
+  obtenerTareas();
+
   // Boton para mostrar el Modal de agregar nueva Tarea
   const nuevaTareaBtn = document.querySelector('.agregar-tarea');
   nuevaTareaBtn.addEventListener('click', mostrarFormulario);
+  
+  async function obtenerTareas() {
+    try {
+      const id = obtenerProyecto()
+      const url = `/api/tareas?url=${id}`
+      const respuesta = await fetch(url)
+      const resultado = await respuesta.json()
+      
+      const { tareas } = resultado
+      mostrarTareas(tareas)
+      // console.log(tareas);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function mostrarTareas(tareas) {
+    console.log('Mostrando ', tareas)
+    
+  }
 
   function mostrarFormulario() {
     const modal = document.createElement('DIV')
