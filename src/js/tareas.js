@@ -33,6 +33,11 @@
       contenedorTareas.appendChild(textoNoTareas)
       return;
     }
+    // Estado de las tareas | Diccionario
+    const estados = {
+      0: 'Pendiente',
+      1: 'Completa'
+     }
     
     tareas.forEach(tarea => {
       // console.log(tarea)
@@ -42,8 +47,18 @@
 
       const nombreTarea = document.createElement('P')
       nombreTarea.textContent = tarea.nombre;
+      
+      const opcionesDiv = document.createElement('DIV')
+      opcionesDiv.classList.add('opciones')
+      
+      // Botones
+      const btnEstadoTarea = document.createElement('BUTTON')
+      btnEstadoTarea.classList.add('estado-tarea')
+      btnEstadoTarea.classList.add(`${estados[tarea.estado].toLowerCase()}`)
+      btnEstadoTarea.textContent = estados[tarea.estado]
+      btnEstadoTarea.dataset.estadoTarea = tarea.estado // Atributo de datos personalizados
 
-      console.log(nombreTarea);
+      console.log(btnEstadoTarea);
       
     })
   }
