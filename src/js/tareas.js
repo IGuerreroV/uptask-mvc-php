@@ -61,6 +61,11 @@
 			btnEstadoTarea.textContent = estados[tarea.estado];
 			btnEstadoTarea.dataset.estadoTarea = tarea.estado; // Atributo de datos personalizados
 
+			// Evento de doble click para cambiar el estado de la tarea
+			btnEstadoTarea.ondblclick = () => {
+				cambiarEstadoTarea({ ...tarea });
+			};
+
 			const btnEliminarTarea = document.createElement("BUTTON");
 			btnEliminarTarea.classList.add("eliminar-tarea");
 			btnEliminarTarea.dataset.idTarea = tarea.id;
@@ -211,6 +216,21 @@
 		} catch (error) {
 			console.log(error);
 		}
+	}
+
+	function cambiarEstadoTarea(tarea) {
+		// console.log(tarea);
+
+		const nuevoEstado = tarea.estado === "1" ? "0" : "1"; // Cambiar el estado de la tarea (0 o 1)
+		tarea.estado = nuevoEstado;
+		actualizarTarea(tarea);
+
+		// console.log(tareas);
+	}
+
+	function actualizarTarea(tarea) {
+		// console.log(tarea);
+		
 	}
 
 	function obtenerProyecto() {
