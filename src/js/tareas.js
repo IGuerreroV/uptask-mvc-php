@@ -248,10 +248,17 @@
 			});
 			// console.log(respuesta);
 
-			const res = await respuesta.json();
-			console.log(respuesta);
-			
-			
+			const resultado = await respuesta.json();
+			// console.log(resultado);
+
+			if (resultado.respuesta.tipo === "exito") {
+				// console.log('Actualizado correctamente');
+				mostrarAlerta(
+					resultado.respuesta.mensaje,
+					resultado.respuesta.tipo,
+					document.querySelector(".contenedor-nueva-tarea"),
+				);
+			}
 		} catch (error) {
 			console.log(error);
 		}

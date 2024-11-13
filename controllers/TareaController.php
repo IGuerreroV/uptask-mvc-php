@@ -14,7 +14,7 @@ class TareaController
     if (!$proyecto_id) {
       header('Location: /dashboard');
     }
-    
+
     $proyecto_id = Proyecto::where('url', $proyecto_id);
     session_start();
     if (!$proyecto_id || $proyecto_id->propietario_id !== $_SESSION['id']) {
@@ -60,7 +60,34 @@ class TareaController
   public static function actualizar()
   {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      // Validar que el proyecto exista
+      $proyecto = Proyecto::where('url', $_POST['proyecto_id']);
 
+      session_start(); // Iniciar la sesión
+
+      if (!$proyecto || $proyecto->propietario_id !== $_SESSION['id']) { // Si no existe el proyecto o no es del usuario
+        $respuesta = [
+          'tipo' => 'error',
+          'mensaje' => 'Hubo un Error al Actualizar la Tarea'
+        ];
+        echo json_encode($respuesta);
+        return;
+      }
+
+      $tarea = new Tarea($_POST);
+      $tarea->proyecto_id = $proyecto->id; // Asignar el proyecto a la tarea
+
+      $resultado = $tarea->guardar();
+      if ($resultado) {
+        $respuesta = [
+          'tipo' => 'exito',
+          'id' => $tarea->id,
+          'proyecto_id' => $proyecto->id,
+          'mensaje' => 'Actualizado Correctamente'
+        ];
+        echo json_encode(['respuesta' => $respuesta]);
+      }
+      // echo json_encode(['resultado' => $resultado]);
     }
   }
 
