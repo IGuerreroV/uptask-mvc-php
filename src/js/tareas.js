@@ -258,6 +258,19 @@
 					resultado.respuesta.tipo,
 					document.querySelector(".contenedor-nueva-tarea"),
 				);
+
+				// Actualizar el estado de la tarea en el VIRTUAL DOM
+				tareas = tareas.map((tareaMemoria) => {
+					// console.log(tareaMemoria.id);
+					// console.log('Modificando',  id);
+					if (tareaMemoria.id === id) {
+						tareaMemoria.estado = estado;
+					}
+
+					return tareaMemoria; // Retorna el objeto modificado
+				});
+				// console.log(tareas);
+				mostrarTareas(); // Actualizar el DOM
 			}
 		} catch (error) {
 			console.log(error);
