@@ -296,9 +296,37 @@
 	}
 
 	async function eliminarTarea(tarea) {
+		const { estado, id, nombre } = tarea;
+
 		const datos = new FormData();
+		datos.append("id", id);
+		datos.append("nombre", nombre);
+		datos.append("estado", estado);
+		datos.append("proyecto_id", obtenerProyecto());
 
 		try {
+			const url = "http://localhost:3000/api/tarea/eliminar";
+			const respuesta = await fetch(url, {
+				method: "POST",
+				body: datos,
+			});
+			// console.log(respuesta);
+
+			const resultado = await respuesta.json();
+			// console.log(resultado);
+			if (resultado.resultado) {
+				// mostrarAlerta(
+				// 	resultado.mensaje,
+				// 	resultado.tipo,
+				// 	document.querySelector(".contenedor-nueva-tarea"),
+				// );
+
+				Swal.fire('Eliminado', resultado.mensaje, 'success');
+				
+				// Eliminar la tarea del VIRTUAL DOM
+				tareas = tareas.filter((tareaMemoria) => tareaMemoria.id !== tarea.id); // Filtra las tareas que no coincidan con el id de la tarea a eliminar
+				mostrarTareas(); // Actualizar el DOM
+			}
 		} catch (error) {}
 	}
 
