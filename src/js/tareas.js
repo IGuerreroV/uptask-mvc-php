@@ -51,7 +51,7 @@
 			const nombreTarea = document.createElement("P");
 			nombreTarea.textContent = tarea.nombre;
 			nombreTarea.ondblclick = () => {
-				mostrarFormulario(true, tarea);
+				mostrarFormulario(true, { ...tarea });
 			};
 
 			const opcionesDiv = document.createElement("DIV");
@@ -129,28 +129,29 @@
 				}, 500);
 			}
 			if (event.target.classList.contains("submit-nueva-tarea")) {
-				submitFormularioNuevaTarea();
+				const nombreTarea = document.querySelector("#tarea").value.trim();
+
+				if (nombreTarea === "") {
+					// Mostrar alerta de error
+					mostrarAlerta(
+						"El nombre de la tarea es Obligatorio",
+						"error",
+						document.querySelector(".formulario legend"),
+					);
+					return;
+				}
+				if (editar) {
+					tarea.nombre = nombreTarea;
+					actualizarTarea(tarea);
+				} else {
+					agregarTarea(nombreTarea);
+				}
 			}
 			// console.log(event.target);
 		});
 
 		document.querySelector(".dashboard").appendChild(modal);
 		// console.log(modal);
-	}
-
-	function submitFormularioNuevaTarea() {
-		const tarea = document.querySelector("#tarea").value.trim();
-
-		if (tarea === "") {
-			// Mostrar alerta de error
-			mostrarAlerta(
-				"El nombre de la tarea es Obligatorio",
-				"error",
-				document.querySelector(".formulario legend"),
-			);
-			return;
-		}
-		agregarTarea(tarea);
 	}
 
 	// Muestra un mensaje de error si no se cumple la validacion
