@@ -6,7 +6,7 @@
 
 	// Boton para mostrar el Modal de agregar nueva Tarea
 	const nuevaTareaBtn = document.querySelector(".agregar-tarea");
-	nuevaTareaBtn.addEventListener("click", mostrarFormulario);
+	nuevaTareaBtn.addEventListener("click", () => mostrarFormulario()); // Array function para ue no pase el evento inmediatamente
 
 	async function obtenerTareas() {
 		try {
@@ -50,6 +50,9 @@
 
 			const nombreTarea = document.createElement("P");
 			nombreTarea.textContent = tarea.nombre;
+			nombreTarea.ondblclick = () => {
+				mostrarFormulario(true, tarea);
+			};
 
 			const opcionesDiv = document.createElement("DIV");
 			opcionesDiv.classList.add("opciones");
@@ -86,23 +89,26 @@
 		}
 	}
 
-	function mostrarFormulario() {
+	function mostrarFormulario(editar = false, tarea = {}) {
+		console.log(tarea);
+
 		const modal = document.createElement("DIV");
 		modal.classList.add("modal");
 		modal.innerHTML = `
     <form class="formulario nueva-tarea">
-      <legend>Añade una nueva tarea</legend>
+      <legend>${editar ? "Editar Tarea" : "Añade una nueva tarea"}</legend>
       <div class="campo">
         <label>Tarea</label>
         <input
           type="text"
           name="tarea"
-          placeholder="Añadir Tarea al Proyecto Actual"
+          placeholder="${tarea.nombre ? "Edita la Tarea" : "Añadir Tarea al Proyecto Actual"}"
           id="tarea"
+					value="${tarea.nombre ? tarea.nombre : ""}"
         />
       </div>
       <div class="opciones">
-        <input type="submit" class="submit-nueva-tarea" value="Añadir Tarea"/>
+        <input type="submit" class="submit-nueva-tarea" value="${editar ? "Guardar Cambios" : "Añadir Tarea"}"/>
         <button type="button" class="cerrar-modal">Cancelar</button>
       </div>
     </form>
@@ -321,8 +327,8 @@
 				// 	document.querySelector(".contenedor-nueva-tarea"),
 				// );
 
-				Swal.fire('Eliminado', resultado.mensaje, 'success');
-				
+				Swal.fire("Eliminado", resultado.mensaje, "success");
+
 				// Eliminar la tarea del VIRTUAL DOM
 				tareas = tareas.filter((tareaMemoria) => tareaMemoria.id !== tarea.id); // Filtra las tareas que no coincidan con el id de la tarea a eliminar
 				mostrarTareas(); // Actualizar el DOM
