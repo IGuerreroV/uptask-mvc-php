@@ -263,11 +263,16 @@
 
 			if (resultado.respuesta.tipo === "exito") {
 				// console.log('Actualizado correctamente');
-				mostrarAlerta(
+				Swal.fire(
 					resultado.respuesta.mensaje,
-					resultado.respuesta.tipo,
-					document.querySelector(".contenedor-nueva-tarea"),
+					resultado.respuesta.mensaje,
+					"success",
 				);
+
+				const modal = document.querySelector(".modal");
+				if (modal) {
+					modal.remove();
+				}
 
 				// Actualizar el estado de la tarea en el VIRTUAL DOM
 				tareas = tareas.map((tareaMemoria) => {
@@ -275,6 +280,7 @@
 					// console.log('Modificando',  id);
 					if (tareaMemoria.id === id) {
 						tareaMemoria.estado = estado;
+						tareaMemoria.nombre = nombre;
 					}
 
 					return tareaMemoria; // Retorna el objeto modificado
