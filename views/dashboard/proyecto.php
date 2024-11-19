@@ -7,7 +7,7 @@
     </button>
   </div>
 
-  <div id="filtros">
+  <div id="filtros" class="filtros">
     <div class="filtros-inputs">
       <h2>Filtros</h2>
       <div class="campo">
