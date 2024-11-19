@@ -3,10 +3,31 @@
 	// Obtener Tareas
 	obtenerTareas();
 	let tareas = [];
+	let filtradas = [];
 
 	// Boton para mostrar el Modal de agregar nueva Tarea
 	const nuevaTareaBtn = document.querySelector(".agregar-tarea");
 	nuevaTareaBtn.addEventListener("click", () => mostrarFormulario()); // Array function para ue no pase el evento inmediatamente
+
+	// Filtros de busqueda
+	const filtros = document.querySelectorAll("#filtros input[type='radio'"); // Selecciona todos los input de tipo radio
+
+	// console.log(filtros);
+	for (const radio of filtros) {
+		radio.addEventListener("input", filtrarTareas);
+	}
+
+	function filtrarTareas(event) {
+		// console.log(event.target.value);
+		const filtro = event.target.value;
+
+		if (filtro !== "") {
+			filtradas = tareas.filter((tarea) => tarea.estado === filtro); // Filtra las tareas que coincidan con el filtro
+		} else {
+			filtradas = [];
+		}
+		mostrarTareas();
+	}
 
 	async function obtenerTareas() {
 		try {
@@ -26,7 +47,10 @@
 	function mostrarTareas() {
 		limpiarTareas(); // Elimina las tareas previas antes de mostrar las nuevas
 		// Scripting
-		if (tareas.length === 0) {
+
+		const arrayTareas = filtradas.length ? filtradas : tareas; // Si hay tareas filtradas, las muestra, sino muestra todas las tareas
+		
+		if (arrayTareas.length === 0) {
 			const contenedorTareas = document.querySelector("#listado-tareas");
 
 			const textoNoTareas = document.createElement("LI");
@@ -42,7 +66,7 @@
 			1: "Completa",
 		};
 
-		for (const tarea of tareas) {
+		for (const tarea of arrayTareas) {
 			// console.log(tarea)
 			const contenedorTarea = document.createElement("LI");
 			contenedorTarea.dataset.tareaId = tarea.id;
