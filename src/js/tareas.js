@@ -47,9 +47,11 @@
 	function mostrarTareas() {
 		limpiarTareas(); // Elimina las tareas previas antes de mostrar las nuevas
 		// Scripting
+		totalPendientes(); // Muestra el total de tareas pendientes
+		totalCompletas(); // Muestra el total de tareas completadas
 
 		const arrayTareas = filtradas.length ? filtradas : tareas; // Si hay tareas filtradas, las muestra, sino muestra todas las tareas
-		
+
 		if (arrayTareas.length === 0) {
 			const contenedorTareas = document.querySelector("#listado-tareas");
 
@@ -110,6 +112,28 @@
 			const listadoTareas = document.querySelector("#listado-tareas");
 			listadoTareas.appendChild(contenedorTarea);
 			// console.log(contenedorTarea);
+		}
+	}
+
+	function totalPendientes() {
+		const totalPendientes = tareas.filter((tarea) => tarea.estado === "0");
+		const pendientesRadio = document.querySelector("#pendientes");
+
+		if (totalPendientes.length === 0) {
+			pendientesRadio.disabled = true;
+		} else {
+			pendientesRadio.disabled = false;
+		}
+	}
+
+	function totalCompletas() {
+		const totalCompletas = tareas.filter((tarea) => tarea.estado === "1");
+		const completasRadio = document.querySelector("#completadas");
+
+		if (totalCompletas.length === 0) {
+			completasRadio.disabled = true;
+		} else {
+			completasRadio.disabled = false;
 		}
 	}
 
