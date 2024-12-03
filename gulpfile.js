@@ -5,12 +5,14 @@ import { dest, series, src, watch } from 'gulp'; // Proporciona funcionalidades 
 import gulpPlumber from 'gulp-plumber';
 import gulpSass from 'gulp-sass'; // Permite compilar archivos Sass a CSS utilizando Gulp.
 import terser from 'gulp-terser'; // Minifica archivos JavaScript para reducir su tamaño y mejorar el rendimiento.
+import imagemin  from 'gulp-imagemin'; 
 
 const sass = gulpSass(dartSass);
 
 const paths = {
   scss: 'src/scss/**/*.scss',
   js: 'src/js/**/*.js',
+  img: 'src/img/**/*'
 };
 
 export function css(done) {
@@ -28,9 +30,17 @@ export function js(done) {
   done();
 }
 
+export function img(done) {
+  src(paths.img)
+    .pipe(imagemin())
+    .pipe(dest('./public/dist/img'));
+  done();
+}
+
 export function dev() {
   watch(paths.scss, css);
   watch(paths.js, js);
+  watch(paths.img, img)
 }
 
-export default series(css, js, dev);
+export default series(css, js, img, dev);
