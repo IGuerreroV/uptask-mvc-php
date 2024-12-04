@@ -3,6 +3,6 @@ const sidebar = document.querySelector(".sidebar");
 
 if (mobileMenuBtn) {
 	mobileMenuBtn.addEventListener("click", () => {
-		sidebar.classList.add("mostrar");
+		sidebar.classList.toggle("mostrar");
 	});
 }
