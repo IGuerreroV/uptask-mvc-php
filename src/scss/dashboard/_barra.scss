@@ -21,9 +21,13 @@
   .menu {
     img {
       width: .8rem;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
-  
+
 }
 
 .barra {
@@ -32,7 +36,7 @@
   @include m.tablet {
     background-color: v.$blanco;
     padding: 1rem 2rem;
-    box-shadow: 1px 12px 9px -13px rgba(0, 0 , 0, .4);
+    box-shadow: 1px 12px 9px -13px rgba(0, 0, 0, .4);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -53,6 +57,6 @@
     padding: 1rem;
     border-radius: .5rem;
 
-    @include m.boton( color.adjust(v.$indigo, $lightness: -20%), v.$blanco);
+    @include m.boton(color.adjust(v.$indigo, $lightness: -20%), v.$blanco);
   }
 }
