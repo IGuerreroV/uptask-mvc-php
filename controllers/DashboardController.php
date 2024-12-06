@@ -100,6 +100,18 @@ class DashboardController
 
     // debuguear($usuario);
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      $usuario->sincronizar($_POST);
+
+      $alertas = $usuario->validar_perfil();
+
+      // debuguear($usuario);
+
+      if (empty($alertas)) {
+
+      }
+    }
+
     // Render a la vista
     $router->render('dashboard/perfil', [
       'titulo' => 'Perfil',
