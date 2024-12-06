@@ -108,7 +108,14 @@ class DashboardController
       // debuguear($usuario);
 
       if (empty($alertas)) {
+        // guardar el usuario
+        $usuario->guardar();
 
+        Usuario::setAlerta('exito', 'Guardado correctamente');
+        $alertas = $usuario->getAlertas();
+
+        // Asignar el nombre nuevo a la sesion
+        $_SESSION['nombre'] = $usuario->nombre;
       }
     }
 
