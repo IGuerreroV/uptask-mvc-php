@@ -108,14 +108,24 @@ class DashboardController
       // debuguear($usuario);
 
       if (empty($alertas)) {
-        // guardar el usuario
-        $usuario->guardar();
+        // Comprobar si el usuario existe
+        $existeUsuario = Usuario::where('email', $usuario->email);
+        // debuguear($existeUsuario);
 
-        Usuario::setAlerta('exito', 'Guardado correctamente');
-        $alertas = $usuario->getAlertas();
+        if ($existeUsuario && $existeUsuario->id !== $usuario->id) {
+          // Mensaje de error
+          Usuario::setAlerta('error', 'El correo ya esta registrado');
+          $alertas = $usuario->getAlertas();
+        } else {
+          // guardar el registro
+          $usuario->guardar();
 
-        // Asignar el nombre nuevo a la sesion
-        $_SESSION['nombre'] = $usuario->nombre;
+          Usuario::setAlerta('exito', 'Guardado correctamente');
+          $alertas = $usuario->getAlertas();
+
+          // Asignar el nombre nuevo a la sesion
+          $_SESSION['nombre'] = $usuario->nombre;
+        }
       }
     }
 
